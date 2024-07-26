@@ -1,6 +1,6 @@
 import { SidebarProvider } from "@/lib/contexts/sidebar-context";
 import { sidebarCookie } from "@/lib/utils/sidebar-cookie";
-import { createClient } from "@/lib/utils/supabase/server";
+import { supabaseServerClient } from "@/lib/utils/supabase/server";
 import { redirect } from "next/navigation";
 import type { PropsWithChildren } from "react";
 import { LayoutContent } from "./layout-content";
@@ -8,9 +8,9 @@ import { DashboardNavbar } from "./navbar";
 import { DashboardSidebar } from "./sidebar";
 
 export default async function DashboardLayout(props: PropsWithChildren) {
-  const supabase = createClient();
+  // const supabase = supabaseServerClient();
 
-  // const { data, error } = await supabase.auth.getUser();
+  // const { data, error } = await supabaseServerClient.auth.getUser();
   // if (error || !data?.user) {
   //   redirect("/sign-in");
   // }

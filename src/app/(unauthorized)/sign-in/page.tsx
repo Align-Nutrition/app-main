@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { login, signup } from "./actions";
+import { login } from "./actions";
 import { Button, Card, Checkbox, Label, TextInput } from "flowbite-react";
 import Image from "next/image";
 
