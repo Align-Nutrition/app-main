@@ -3,7 +3,12 @@
 import { useSidebarContext } from "@/lib/contexts/sidebar-context";
 import { Badge, Sidebar, TextInput, theme } from "flowbite-react";
 import Link from "next/link";
-import { usePathname, useSelectedLayoutSegment } from "next/navigation";
+import {
+  useParams,
+  usePathname,
+  useSelectedLayoutSegment,
+  useSelectedLayoutSegments,
+} from "next/navigation";
 import type { ComponentProps, FC, HTMLAttributeAnchorTarget } from "react";
 import { GiFruitBowl } from "react-icons/gi";
 import {
@@ -32,11 +37,10 @@ interface SidebarItem {
   label: string;
   items?: SidebarItem[];
   badge?: string;
+  segment?: string | null;
 }
 
-interface SidebarItemProps extends SidebarItem {
-  segment: string | null;
-}
+interface SidebarItemProps extends SidebarItem {}
 
 export function DashboardSidebar() {
   return (
@@ -52,7 +56,6 @@ export function DashboardSidebar() {
 }
 
 function DesktopSidebar() {
-  const segment = useSelectedLayoutSegment();
   const { isCollapsed } = useSidebarContext().desktop;
 
   return (
@@ -70,7 +73,7 @@ function DesktopSidebar() {
           <Sidebar.Items>
             <Sidebar.ItemGroup className="mt-0 border-t-0 pb-1 pt-0">
               {pages.map((item) => (
-                <SidebarItem key={item.label} {...item} segment={segment} />
+                <SidebarItem key={item.label} {...item} />
               ))}
             </Sidebar.ItemGroup>
           </Sidebar.Items>
@@ -115,7 +118,6 @@ function DesktopSidebar() {
 }
 
 function MobileSidebar() {
-  const segment = useSelectedLayoutSegment();
   const { isOpen, close } = useSidebarContext().mobile;
 
   if (!isOpen) return null;
@@ -144,7 +146,7 @@ function MobileSidebar() {
             <Sidebar.Items>
               <Sidebar.ItemGroup className="mt-0 border-t-0 pb-1 pt-0">
                 {pages.map((item) => (
-                  <SidebarItem key={item.label} {...item} segment={segment} />
+                  <SidebarItem key={item.label} {...item} />
                 ))}
               </Sidebar.ItemGroup>
             </Sidebar.Items>
@@ -161,18 +163,24 @@ function MobileSidebar() {
 }
 
 function SidebarItem({
-  href,
-  target,
-  icon,
-  label,
-  items,
   badge,
+  href,
+  icon,
+  items,
+  label,
   segment,
+  target,
 }: SidebarItemProps) {
+  const segments = useSelectedLayoutSegments();
   const pathname = usePathname();
+  const { businessId } = useParams();
+  const addBusinessIdToHref = (pathHref: string | undefined) =>
+    `/${businessId}${pathHref}`;
+
   const { isCollapsed } = useSidebarContext().desktop;
+
   if (items) {
-    const isOpen = items.some((item) => pathname?.startsWith(item.href ?? ""));
+    const isOpen = items.some((item) => segments?.includes(item.segment ?? ""));
     return (
       <Sidebar.Collapse
         icon={icon}
@@ -184,14 +192,13 @@ function SidebarItem({
           <Sidebar.Item
             key={item.label}
             as={Link}
-            href={item.href}
+            href={addBusinessIdToHref(item.href)}
             target={item.target}
             icon={!isCollapsed && item.icon}
             label={item.badge}
             className={twMerge(
               "justify-center [&>*]:font-normal",
-              segment &&
-                pathname?.startsWith(item.href ?? "") &&
+              segments?.includes(item.segment ?? "") &&
                 "bg-gray-100 dark:bg-gray-700"
             )}
             theme={{
@@ -213,12 +220,12 @@ function SidebarItem({
   return (
     <Sidebar.Item
       as={Link}
-      href={href}
+      href={addBusinessIdToHref(href)}
       target={target}
       icon={icon}
       label={badge}
       className={twMerge(
-        pathname?.startsWith(href ?? "") && "bg-gray-100 dark:bg-gray-700"
+        segments?.includes(segment ?? "") && "bg-gray-100 dark:bg-gray-700"
       )}
     >
       {label}
@@ -227,20 +234,46 @@ function SidebarItem({
 }
 
 const pages: SidebarItem[] = [
-  { href: "/", icon: MdOutlineDashboard, label: "Dashboard" },
-  { href: "/files", icon: HiOutlineDocument, label: "Files" },
+  {
+    href: "/",
+    icon: MdOutlineDashboard,
+    label: "Dashboard",
+    segment: null,
+  },
+  {
+    href: "/files",
+    icon: HiOutlineDocument,
+    label: "Files",
+    segment: "files",
+  },
   {
     icon: HiOutlineUsers,
     label: "Clients",
     items: [
-      { href: "/clients", label: "List", icon: HiOutlineTable },
-      { href: "/client-forms", label: "Forms", icon: MdOutlineDynamicForm },
-      { href: "/client-groups", label: "Groups", icon: HiOutlineUserGroup },
+      {
+        href: "/clients",
+        label: "List",
+        icon: HiOutlineTable,
+        segment: "clients",
+      },
+      {
+        href: "/client-forms",
+        label: "Forms",
+        icon: MdOutlineDynamicForm,
+        segment: "client-forms",
+      },
+      {
+        href: "/client-groups",
+        label: "Groups",
+        icon: HiOutlineUserGroup,
+        segment: "client-groups",
+      },
       {
         href: "/client-inbox",
         label: "Inbox",
         badge: "3",
         icon: HiOutlineMailOpen,
+        segment: "client-inbox",
       },
     ],
   },
@@ -248,21 +281,29 @@ const pages: SidebarItem[] = [
     icon: PiBarbell,
     label: "Fitness",
     items: [
-      { href: "/exercises", label: "My Exercises", icon: HiOutlineTable },
+      {
+        href: "/exercises",
+        label: "My Exercises",
+        icon: HiOutlineTable,
+        segment: "exercises",
+      },
       {
         href: "/exercise-library",
         label: "Exercsie Library",
         icon: HiOutlineDatabase,
+        segment: "exercise-library",
       },
       {
         href: "/workout-templates",
         label: "Workout Templates",
         icon: HiOutlineTable,
+        segment: "workout-templates",
       },
       {
         href: "/workout-template-library",
         label: "Template Library",
         icon: HiOutlineDatabase,
+        segment: "workout-template-library",
       },
     ],
   },
@@ -274,17 +315,25 @@ const pages: SidebarItem[] = [
         href: "/meal-templates",
         label: "Meal Templates",
         icon: HiOutlineTable,
+        segment: "meal-templates",
       },
       {
         href: "/meal-template-library",
         label: "Template Library",
         icon: HiOutlineDatabase,
+        segment: "meal-template-library",
       },
-      { href: "/recipes", label: "My Recipes", icon: HiOutlineTable },
+      {
+        href: "/recipes",
+        label: "My Recipes",
+        icon: HiOutlineTable,
+        segment: "recipes",
+      },
       {
         href: "/recipe-library",
         label: "Recipe Library",
         icon: HiOutlineDatabase,
+        segment: "recipe-library",
       },
     ],
   },
