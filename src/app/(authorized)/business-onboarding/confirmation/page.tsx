@@ -1,10 +1,29 @@
-"use client";
+import { stripe } from "@/lib/utils/stripe";
+import { createSupabaseServerClient } from "@/lib/utils/supabase/server";
 import { Button } from "flowbite-react";
-import { useSearchParams } from "next/navigation";
+import { redirect } from "next/navigation";
 
-export default function Page() {
-  const searchParams = useSearchParams();
-  const businessId = searchParams.get("business_id");
+type BusinessOnboardingConfirmationPageTypes = {
+  searchParams: {
+    business_id: string;
+    session_id: string;
+  };
+};
+
+export default async function Page({
+  searchParams: { business_id: businessId, session_id: sessionId },
+}: BusinessOnboardingConfirmationPageTypes) {
+  if (!sessionId) redirect("/");
+
+  const session = await stripe.checkout.sessions.retrieve(sessionId);
+  if (!session || session.status === "open") redirect("/");
+
+  const supabase = createSupabaseServerClient();
+  const { error } = await supabase
+    .from("businesses")
+    .update({ stripe_subscription_id: session.subscription as string })
+    .eq("id", businessId);
+  if (error) throw error;
 
   return (
     <>

@@ -2,6 +2,7 @@
 
 import { useBusinessContext } from "@/lib/contexts/business-context";
 import { useSidebarContext } from "@/lib/contexts/sidebar-context";
+import { useUserContext } from "@/lib/contexts/user-context";
 import { useMediaQuery } from "@/lib/hooks/use-media-query";
 import { supabaseClient } from "@/lib/utils/supabase/client";
 import {
@@ -16,9 +17,11 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { Fragment } from "react";
 import { HiBell, HiEye, HiMenuAlt1, HiSearch, HiX } from "react-icons/hi";
 
 export function DashboardNavbar() {
+  const { businessUsers } = useUserContext();
   const { business } = useBusinessContext();
   const router = useRouter();
   const sidebar = useSidebarContext();
@@ -98,19 +101,31 @@ export function DashboardNavbar() {
                 arrowIcon: "hidden",
               }}
             >
-              <Dropdown.Item>
-                <Image
-                  className="mr-3 h-8 aspect-square"
-                  alt=""
-                  src="/images/logo.svg"
-                  width={32}
-                  height={32}
-                />
-                <div className="text-left font-semibold leading-none text-gray-900 dark:text-white">
-                  Key Nutrition Key Nutrition Key Nutrition
-                </div>
-              </Dropdown.Item>
-              <Dropdown.Divider />
+              {businessUsers?.flatMap((businessUser) =>
+                businessUser?.business_id === business?.id ? (
+                  []
+                ) : (
+                  <Fragment key={businessUser?.business_id}>
+                    <Dropdown.Item
+                      onClick={() =>
+                        router.push(`/${businessUser?.business_id}`)
+                      }
+                    >
+                      <Image
+                        className="mr-3 h-8 aspect-square"
+                        alt=""
+                        src="/images/logo.svg"
+                        width={32}
+                        height={32}
+                      />
+                      <div className="text-left font-semibold leading-none text-gray-900 dark:text-white">
+                        {businessUser?.business.name}
+                      </div>
+                    </Dropdown.Item>
+                    <Dropdown.Divider />
+                  </Fragment>
+                )
+              )}
               <Dropdown.Item
                 onClick={() => router.push(`/business-onboarding`)}
               >

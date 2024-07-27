@@ -3,15 +3,21 @@
 import { Tables } from "@/lib/types/supabase";
 import { createContext, PropsWithChildren, useContext } from "react";
 
+interface BusinessUsersWithBusiness extends Partial<Tables<"business_users">> {
+  business: Partial<Tables<"businesses">> | null;
+}
+
 interface IUserContextProps {
-  profile?: Partial<Tables<"profiles">> | null;
-  userPreferences?: Partial<Tables<"user_preferences">> | null;
-  businessUsers?: Partial<Tables<"business_users">[]> | null;
+  email?: string | null;
+  profile: Partial<Tables<"profiles">> | null;
+  userPreferences: Partial<Tables<"user_preferences">> | null;
+  businessUsers?: BusinessUsersWithBusiness[] | null;
 }
 
 type UserContextProviderType = PropsWithChildren<IUserContextProps>;
 
 const UserContext = createContext<IUserContextProps>({
+  email: null,
   profile: {},
   userPreferences: {},
   businessUsers: [],
@@ -27,12 +33,15 @@ export function useUserContext(): IUserContextProps {
 
 export function UserContextProvider({
   children,
+  email,
   businessUsers,
   profile,
   userPreferences,
 }: UserContextProviderType) {
   return (
-    <UserContext.Provider value={{ businessUsers, profile, userPreferences }}>
+    <UserContext.Provider
+      value={{ email, businessUsers, profile, userPreferences }}
+    >
       {children}
     </UserContext.Provider>
   );

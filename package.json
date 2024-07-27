@@ -11,6 +11,8 @@
     "update-types": "npx supabase gen types --lang=typescript --project-id mzexgfklayufowipbfwf --schema public > src/lib/types/supabase.d.ts"
   },
   "dependencies": {
+    "@stripe/react-stripe-js": "^2.7.3",
+    "@stripe/stripe-js": "^4.1.0",
     "@supabase/ssr": "^0.4.0",
     "@supabase/supabase-js": "^2.44.4",
     "flowbite-react": "^0.9.0",
@@ -21,6 +23,7 @@
     "react-icons": "^5.2.1",
     "react-sortablejs": "^6.1.4",
     "sharp": "^0.33.3",
+    "stripe": "^16.5.0",
     "svgmap": "^2.10.1",
     "tailwind-merge": "^2.2.2"
   },

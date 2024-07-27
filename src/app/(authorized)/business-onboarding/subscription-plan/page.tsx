@@ -1,12 +1,25 @@
 "use client";
+import { useUserContext } from "@/lib/contexts/user-context";
 import formatAsCurrency from "@/lib/utils/format-as-currency";
-import { Tabs, theme, ToggleSwitch } from "flowbite-react";
+import getStripe from "@/lib/utils/get-stripe-client";
+
+import {
+  EmbeddedCheckout,
+  EmbeddedCheckoutProvider,
+} from "@stripe/react-stripe-js";
+import { Drawer, Tabs, theme, ToggleSwitch } from "flowbite-react";
+import { useSearchParams } from "next/navigation";
 import { useState } from "react";
+import { CiMoneyBill } from "react-icons/ci";
 import { twMerge } from "tailwind-merge";
 
 export default function Page() {
+  const { email } = useUserContext();
+  const [clientSecret, setClientSecret] = useState();
   const [activeTab, setActiveTab] = useState("Coach");
   const [duration, setDuration] = useState("monthly");
+  const searchParams = useSearchParams();
+  const businessId = searchParams.get("business_id");
 
   const pricingOptions = [
     {
@@ -16,10 +29,12 @@ export default function Page() {
         {
           duration: "monthly",
           price: 97.0,
+          id: "1",
         },
         {
           duration: "annually",
           price: 997.0,
+          id: "2",
         },
       ],
       features: [
@@ -52,10 +67,12 @@ export default function Page() {
         {
           duration: "monthly",
           price: 197.0,
+          id: "price_1NAkLuApdwT2qmNQPRktYKUj",
         },
         {
           duration: "annually",
           price: 2197.0,
+          id: "price_1NAkLuApdwT2qmNQ7lELTPtE",
         },
       ],
       features: [
@@ -88,10 +105,12 @@ export default function Page() {
         {
           duration: "monthly",
           price: 297.0,
+          id: "3",
         },
         {
           duration: "annually",
           price: 3497.0,
+          id: "3",
         },
       ],
       features: [
@@ -124,10 +143,12 @@ export default function Page() {
         {
           duration: "monthly",
           price: 497.0,
+          id: "3",
         },
         {
           duration: "annually",
           price: 4997.0,
+          id: "3",
         },
       ],
       features: [
@@ -166,6 +187,24 @@ export default function Page() {
     }))
     .find((option) => option.name === activeTab);
 
+  const handleCreateClientSecret = async () =>
+    fetch(`/api/stripe/create-checkout-session`, {
+      method: "POST",
+      body: JSON.stringify({
+        customer_email: email,
+        price_id: selectedPricingOption?.price?.id,
+        business_id: businessId,
+        origin: window.location.origin,
+      }),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        console.log({ res });
+        if (res.error) throw res.error;
+        return res.clientSecret;
+      })
+      .then(setClientSecret);
+
   return (
     <>
       <h1 className="mb-4 text-2xl font-extrabold leading-tight tracking-tight text-gray-900 dark:text-white sm:mb-6">
@@ -174,10 +213,36 @@ export default function Page() {
       <p className="mb-4 text-lg text-gray-500 dark:text-gray-400">
         If the plans below do not work for you, contact us for a bespoke option.
       </p>
+      {clientSecret && (
+        <Drawer
+          open
+          onClose={() => setClientSecret(undefined)}
+          theme={{
+            header: {
+              inner: {
+                titleText: twMerge(
+                  theme.drawer.header.inner.titleText,
+                  "mb-0 text-xl font-semibold text-gray-900 dark:text-white"
+                ),
+              },
+            },
+          }}
+        >
+          <Drawer.Header title="Checkout" titleIcon={CiMoneyBill} />
+          <Drawer.Items>
+            <EmbeddedCheckoutProvider
+              stripe={getStripe()}
+              options={{ clientSecret }}
+            >
+              <EmbeddedCheckout />
+            </EmbeddedCheckoutProvider>
+          </Drawer.Items>
+        </Drawer>
+      )}
       <div className="grid lg:grid-cols-3 gap-6">
         <div className="col-span-2">
           <Tabs
-            onClick={(prop) => {
+            onClick={() => {
               window.setTimeout(() => {
                 setActiveTab(
                   document.querySelector("[aria-selected=true]")?.innerHTML ??
@@ -279,12 +344,12 @@ export default function Page() {
                 value: selectedPricingOption?.price?.price ?? 0,
               })}
             </div>
-            <a
-              href="#"
-              className="mb-4 flex justify-center rounded-lg bg-cyan-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-cyan-700 focus:ring-4 focus:ring-blue-200 dark:focus:ring-cyan-900"
+            <div
+              onClick={handleCreateClientSecret}
+              className="mb-4 flex justify-center rounded-lg bg-cyan-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-cyan-700 focus:ring-4 focus:ring-blue-200 dark:focus:ring-cyan-900 cursor-pointer"
             >
               Checkout
-            </a>
+            </div>
             <p className="text-sm text-gray-500 dark:text-gray-400">
               *Contact us for any questions. Pricing is refundable within 30
               days.

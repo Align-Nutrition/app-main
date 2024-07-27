@@ -16,15 +16,17 @@ export default async function Layout({ children }: PropsWithChildren) {
     .eq("id", user.id)
     .limit(1)
     .maybeSingle();
+
   const fetchUserPreferences = supabase
     .from("user_preferences")
     .select("*")
     .eq("user_id", user.id)
     .limit(1)
     .maybeSingle();
+
   const fetchBusinessUsers = supabase
     .from("business_users")
-    .select("*")
+    .select("*, business: businesses!business_users_business_id_fkey(*)")
     .eq("user_id", user.id);
 
   const [
@@ -39,6 +41,7 @@ export default async function Layout({ children }: PropsWithChildren) {
 
   return (
     <UserContextProvider
+      email={user.email}
       businessUsers={businessUsers}
       profile={profile}
       userPreferences={userPreferences}
