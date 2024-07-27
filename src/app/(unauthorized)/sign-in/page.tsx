@@ -1,9 +1,9 @@
-import Link from "next/link";
-import { login } from "./actions";
 import { Button, Card, Checkbox, Label, TextInput } from "flowbite-react";
 import Image from "next/image";
+import Link from "next/link";
+import { login } from "./actions";
 
-export default function Page() {
+export default async function Page() {
   return (
     <div className="mx-auto flex flex-col items-center justify-center px-6 pt-8 md:h-screen">
       <Link

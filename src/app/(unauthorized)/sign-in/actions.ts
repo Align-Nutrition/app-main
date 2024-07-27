@@ -1,16 +1,17 @@
 "use server";
 
-import { supabaseServerClient } from "@/lib/utils/supabase/server";
+import { createSupabaseServerClient } from "@/lib/utils/supabase/server";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 export async function login(formData: FormData) {
+  const supabase = createSupabaseServerClient();
   const { email, password } = Object.fromEntries(formData) as {
     email: string;
     password: string;
   };
 
-  const { error } = await supabaseServerClient.auth.signInWithPassword({
+  const { error } = await supabase.auth.signInWithPassword({
     email,
     password,
   });
@@ -20,5 +21,5 @@ export async function login(formData: FormData) {
   }
 
   revalidatePath("/", "layout");
-  redirect("/dashboard");
+  redirect("/");
 }

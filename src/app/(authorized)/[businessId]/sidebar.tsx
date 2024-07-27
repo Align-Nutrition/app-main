@@ -6,22 +6,18 @@ import Link from "next/link";
 import {
   useParams,
   usePathname,
-  useSelectedLayoutSegment,
   useSelectedLayoutSegments,
 } from "next/navigation";
 import type { ComponentProps, FC, HTMLAttributeAnchorTarget } from "react";
-import { GiFruitBowl } from "react-icons/gi";
 import {
   HiOutlineDatabase,
   HiOutlineMailOpen,
   HiOutlineTable,
-  HiOutlineTemplate,
   HiOutlineUserGroup,
   HiOutlineUsers,
   HiSearch,
 } from "react-icons/hi";
 import { HiOutlineDocument } from "react-icons/hi2";
-import { IoRestaurantOutline } from "react-icons/io5";
 import {
   MdOutlineDashboard,
   MdOutlineDynamicForm,

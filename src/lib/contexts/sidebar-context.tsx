@@ -1,6 +1,5 @@
 "use client";
 
-import type { SidebarCookie } from "@/lib/sidebar-cookie";
 import type { PropsWithChildren } from "react";
 import { createContext, useContext, useState } from "react";
 
@@ -39,7 +38,7 @@ export function SidebarProvider({
       },
       body: JSON.stringify({
         isCollapsed: value,
-      } satisfies SidebarCookie),
+      }),
     });
   }
 
@@ -68,7 +67,7 @@ export function useSidebarContext(): SidebarContextProps {
 
   if (!context) {
     throw new Error(
-      "useSidebarContext must be used within the SidebarContext provider!",
+      "useSidebarContext must be used within the SidebarContext provider!"
     );
   }
 

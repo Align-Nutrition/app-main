@@ -99,19 +99,34 @@ export type Database = {
       }
       businesses: {
         Row: {
+          country: string | null
           created_at: string
+          email: string | null
           id: string
+          logo: string | null
           name: string
+          phone: string | null
+          stripe_subscription_id: string | null
         }
         Insert: {
+          country?: string | null
           created_at?: string
+          email?: string | null
           id?: string
+          logo?: string | null
           name: string
+          phone?: string | null
+          stripe_subscription_id?: string | null
         }
         Update: {
+          country?: string | null
           created_at?: string
+          email?: string | null
           id?: string
+          logo?: string | null
           name?: string
+          phone?: string | null
+          stripe_subscription_id?: string | null
         }
         Relationships: []
       }

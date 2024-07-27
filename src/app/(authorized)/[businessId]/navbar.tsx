@@ -1,9 +1,9 @@
 "use client";
 
+import { useBusinessContext } from "@/lib/contexts/business-context";
 import { useSidebarContext } from "@/lib/contexts/sidebar-context";
 import { useMediaQuery } from "@/lib/hooks/use-media-query";
 import { supabaseClient } from "@/lib/utils/supabase/client";
-import supabasePromiseResponse from "@/lib/utils/supabase/promise-response";
 import {
   Avatar,
   DarkThemeToggle,
@@ -13,29 +13,14 @@ import {
   TextInput,
   Tooltip,
 } from "flowbite-react";
-import { revalidatePath } from "next/cache";
 import Image from "next/image";
 import Link from "next/link";
-import { redirect, useRouter } from "next/navigation";
-import {
-  HiArchive,
-  HiBell,
-  HiCog,
-  HiCurrencyDollar,
-  HiEye,
-  HiInbox,
-  HiLogout,
-  HiMenuAlt1,
-  HiOutlineTicket,
-  HiSearch,
-  HiShoppingBag,
-  HiUserCircle,
-  HiUsers,
-  HiViewGrid,
-  HiX,
-} from "react-icons/hi";
+import { useRouter } from "next/navigation";
+import { HiBell, HiEye, HiMenuAlt1, HiSearch, HiX } from "react-icons/hi";
 
 export function DashboardNavbar() {
+  const { business } = useBusinessContext();
+  const router = useRouter();
   const sidebar = useSidebarContext();
   const isDesktop = useMediaQuery("(min-width: 1024px)");
 
@@ -88,7 +73,7 @@ export function DashboardNavbar() {
                     />
                     <div className="text-left">
                       <div className="mb-0.5 font-semibold leading-none text-gray-900 dark:text-white">
-                        Fitness Professionals
+                        {business?.name}
                       </div>
                     </div>
                   </div>
@@ -126,20 +111,12 @@ export function DashboardNavbar() {
                 </div>
               </Dropdown.Item>
               <Dropdown.Divider />
-              <Dropdown.Item>Add new business</Dropdown.Item>
+              <Dropdown.Item
+                onClick={() => router.push(`/business-onboarding`)}
+              >
+                Add new business
+              </Dropdown.Item>
             </Dropdown>
-            {/* <Navbar.Brand as={Link} href="/" className="mr-14">
-              <Image
-                className="mr-3 h-8"
-                alt=""
-                src="/images/logo.svg"
-                width={32}
-                height={32}
-              />
-              <span className="self-center whitespace-nowrap text-2xl font-semibold dark:text-white">
-                Flowbite
-              </span>
-            </Navbar.Brand> */}
             <form className="hidden lg:block lg:pl-2">
               <Label htmlFor="search" className="sr-only">
                 Search
@@ -162,7 +139,7 @@ export function DashboardNavbar() {
                 <HiSearch className="h-6 w-6" />
               </button>
               <NotificationBellDropdown />
-              <AppDrawerDropdown />
+
               <div className="hidden dark:block">
                 <Tooltip content="Toggle light mode">
                   <DarkThemeToggle />
@@ -409,110 +386,6 @@ function NotificationBellDropdown() {
           <div className="inline-flex items-center gap-x-2">
             <HiEye className="h-5 w-5" />
             <span>View all</span>
-          </div>
-        </Link>
-      </div>
-    </Dropdown>
-  );
-}
-
-function AppDrawerDropdown() {
-  return (
-    <Dropdown
-      className="rounded"
-      arrowIcon={false}
-      inline
-      label={
-        <span className="rounded-lg p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-          <span className="sr-only">Apps</span>
-          <HiViewGrid className="h-6 w-6" />
-        </span>
-      }
-      theme={{ content: "py-0" }}
-    >
-      <div className="block border-b bg-gray-50 px-4 py-2 text-center text-base font-medium text-gray-700 dark:border-b-gray-600 dark:bg-gray-700 dark:text-gray-400">
-        Apps
-      </div>
-      <div className="grid grid-cols-3 gap-4 p-4">
-        <Link
-          href="#"
-          className="block rounded-lg p-4 text-center hover:bg-gray-100 dark:hover:bg-gray-600"
-        >
-          <HiShoppingBag className="mx-auto mb-1 h-7 w-7 text-gray-500 dark:text-gray-400" />
-          <div className="text-sm font-medium text-gray-900 dark:text-white">
-            Sales
-          </div>
-        </Link>
-        <Link
-          href="#"
-          className="block rounded-lg p-4 text-center hover:bg-gray-100 dark:hover:bg-gray-600"
-        >
-          <HiUsers className="mx-auto mb-1 h-7 w-7 text-gray-500 dark:text-gray-400" />
-          <div className="text-sm font-medium text-gray-900 dark:text-white">
-            Users
-          </div>
-        </Link>
-        <Link
-          href="#"
-          className="block rounded-lg p-4 text-center hover:bg-gray-100 dark:hover:bg-gray-600"
-        >
-          <HiInbox className="mx-auto mb-1 h-7 w-7 text-gray-500 dark:text-gray-400" />
-          <div className="text-sm font-medium text-gray-900 dark:text-white">
-            Inbox
-          </div>
-        </Link>
-        <Link
-          href="#"
-          className="block rounded-lg p-4 text-center hover:bg-gray-100 dark:hover:bg-gray-600"
-        >
-          <HiUserCircle className="mx-auto mb-1 h-7 w-7 text-gray-500 dark:text-gray-400" />
-          <div className="text-sm font-medium text-gray-900 dark:text-white">
-            Profile
-          </div>
-        </Link>
-        <Link
-          href="#"
-          className="block rounded-lg p-4 text-center hover:bg-gray-100 dark:hover:bg-gray-600"
-        >
-          <HiCog className="mx-auto mb-1 h-7 w-7 text-gray-500 dark:text-gray-400" />
-          <div className="text-sm font-medium text-gray-900 dark:text-white">
-            Settings
-          </div>
-        </Link>
-        <Link
-          href="#"
-          className="block rounded-lg p-4 text-center hover:bg-gray-100 dark:hover:bg-gray-600"
-        >
-          <HiArchive className="mx-auto mb-1 h-7 w-7 text-gray-500 dark:text-gray-400" />
-          <div className="text-sm font-medium text-gray-900 dark:text-white">
-            Products
-          </div>
-        </Link>
-        <Link
-          href="#"
-          className="block rounded-lg p-4 text-center hover:bg-gray-100 dark:hover:bg-gray-600"
-        >
-          <HiCurrencyDollar className="mx-auto mb-1 h-7 w-7 text-gray-500 dark:text-gray-400" />
-          <div className="text-sm font-medium text-gray-900 dark:text-white">
-            Pricing
-          </div>
-        </Link>
-        <Link
-          href="#"
-          className="block rounded-lg p-4 text-center hover:bg-gray-100 dark:hover:bg-gray-600"
-        >
-          <HiOutlineTicket className="mx-auto mb-1 h-7 w-7 text-gray-500 dark:text-gray-400" />
-          <div className="text-sm font-medium text-gray-900 dark:text-white">
-            Billing
-          </div>
-        </Link>
-        <Link
-          href="#"
-          className="block rounded-lg p-4 text-center hover:bg-gray-100 dark:hover:bg-gray-600"
-        >
-          <HiLogout className="mx-auto mb-1 h-7 w-7 text-gray-500 dark:text-gray-400" />
-          <div className="text-sm font-medium text-gray-900 dark:text-white">
-            Logout
           </div>
         </Link>
       </div>

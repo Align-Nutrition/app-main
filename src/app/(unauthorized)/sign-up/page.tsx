@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { signup } from "./actions";
 
-export default function Page() {
+export default async function Page() {
   return (
     <div className="mx-auto flex flex-col items-center justify-center px-6 pt-8 md:h-screen">
       <Link
