@@ -168,7 +168,6 @@ function SidebarItem({
   target,
 }: SidebarItemProps) {
   const segments = useSelectedLayoutSegments();
-  const pathname = usePathname();
   const { businessId } = useParams();
   const addBusinessIdToHref = (pathHref: string | undefined) =>
     `/${businessId}${pathHref}`;
@@ -221,7 +220,9 @@ function SidebarItem({
       icon={icon}
       label={badge}
       className={twMerge(
-        segments?.includes(segment ?? "") && "bg-gray-100 dark:bg-gray-700"
+        (segments?.includes(segment ?? "") ||
+          (!segment && segments.length === 0)) &&
+          "bg-gray-100 dark:bg-gray-700"
       )}
     >
       {label}
