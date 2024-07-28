@@ -9,6 +9,57 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      business_client_invites: {
+        Row: {
+          business_id: string
+          converted: boolean
+          created_at: string
+          custom_welcome_message: string | null
+          email: string
+          first_name: string
+          id: number
+          last_name: string | null
+          trainer_id: string
+        }
+        Insert: {
+          business_id: string
+          converted?: boolean
+          created_at?: string
+          custom_welcome_message?: string | null
+          email: string
+          first_name: string
+          id?: number
+          last_name?: string | null
+          trainer_id: string
+        }
+        Update: {
+          business_id?: string
+          converted?: boolean
+          created_at?: string
+          custom_welcome_message?: string | null
+          email?: string
+          first_name?: string
+          id?: number
+          last_name?: string | null
+          trainer_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "business_client_invites_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "businesses"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "business_client_invites_trainer_id_fkey1"
+            columns: ["trainer_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       business_user_assessments: {
         Row: {
           business_id: string
@@ -40,10 +91,10 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "business_user_assessments_user_fkey"
+            foreignKeyName: "business_user_assessments_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: false
-            referencedRelation: "users"
+            referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
         ]
@@ -82,17 +133,17 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "business_users_trainer_id_fkey"
+            foreignKeyName: "business_users_trainer_id_fkey1"
             columns: ["trainer_id"]
             isOneToOne: false
-            referencedRelation: "users"
+            referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "business_users_user_fkey"
+            foreignKeyName: "business_users_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: false
-            referencedRelation: "users"
+            referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
         ]
@@ -167,26 +218,35 @@ export type Database = {
       }
       user_preferences: {
         Row: {
+          food_allergies: string[] | null
+          food_dislikes: string[] | null
+          food_likes: string[] | null
           measurements: string[] | null
           system_of_measurement: string | null
           user_id: string
         }
         Insert: {
+          food_allergies?: string[] | null
+          food_dislikes?: string[] | null
+          food_likes?: string[] | null
           measurements?: string[] | null
           system_of_measurement?: string | null
           user_id: string
         }
         Update: {
+          food_allergies?: string[] | null
+          food_dislikes?: string[] | null
+          food_likes?: string[] | null
           measurements?: string[] | null
           system_of_measurement?: string | null
           user_id?: string
         }
         Relationships: [
           {
-            foreignKeyName: "user_system_preferences_user_fkey"
+            foreignKeyName: "user_preferences_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: true
-            referencedRelation: "users"
+            referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
         ]

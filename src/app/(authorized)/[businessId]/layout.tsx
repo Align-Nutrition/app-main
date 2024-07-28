@@ -20,13 +20,15 @@ export default async function DashboardLayout(props: DashboardLayoutType) {
   const supabase = createSupabaseServerClient();
   const { data: business, error: fetchBusinessError } = await supabase
     .from("businesses")
-    .select("*")
+    .select(
+      "*, users: business_users!business_users_business_id_fkey(*, profile: profiles!business_users_user_id_fkey(*))"
+    )
     .eq("id", businessId)
     .limit(1)
     .maybeSingle();
 
+  if (fetchBusinessError) throw fetchBusinessError;
   if (!business) notFound();
-  if (fetchBusinessError) throw new Error(fetchBusinessError);
 
   // redirect to subscription plan selection page if no subscription exists.
   // we should also check the state of subscription and redirect if needed
