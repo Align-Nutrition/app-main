@@ -3,14 +3,11 @@
 import { useSidebarContext } from "@/lib/contexts/sidebar-context";
 import { Badge, Sidebar, TextInput, theme } from "flowbite-react";
 import Link from "next/link";
-import {
-  useParams,
-  usePathname,
-  useSelectedLayoutSegments,
-} from "next/navigation";
+import { useParams, useSelectedLayoutSegments } from "next/navigation";
 import type { ComponentProps, FC, HTMLAttributeAnchorTarget } from "react";
 import {
   HiOutlineDatabase,
+  HiOutlineFilter,
   HiOutlineMailOpen,
   HiOutlineTable,
   HiOutlineUserGroup,
@@ -18,11 +15,7 @@ import {
   HiSearch,
 } from "react-icons/hi";
 import { HiOutlineDocument } from "react-icons/hi2";
-import {
-  MdOutlineDashboard,
-  MdOutlineDynamicForm,
-  MdOutlineFastfood,
-} from "react-icons/md";
+import { MdOutlineDashboard, MdOutlineFastfood } from "react-icons/md";
 import { PiBarbell } from "react-icons/pi";
 import { twMerge } from "tailwind-merge";
 
@@ -256,7 +249,7 @@ const pages: SidebarItem[] = [
       {
         href: "/client-forms",
         label: "Forms",
-        icon: MdOutlineDynamicForm,
+        icon: HiOutlineFilter,
         segment: "client-forms",
       },
       {
@@ -281,26 +274,17 @@ const pages: SidebarItem[] = [
       {
         href: "/exercises",
         label: "My Exercises",
-        icon: HiOutlineTable,
         segment: "exercises",
-      },
-      {
-        href: "/exercise-library",
-        label: "Exercsie Library",
-        icon: HiOutlineDatabase,
-        segment: "exercise-library",
       },
       {
         href: "/workout-templates",
         label: "Workout Templates",
-        icon: HiOutlineTable,
         segment: "workout-templates",
       },
       {
-        href: "/workout-template-library",
-        label: "Template Library",
-        icon: HiOutlineDatabase,
-        segment: "workout-template-library",
+        href: "/workout-programs",
+        label: "Workout Programs",
+        segment: "workout-programs",
       },
     ],
   },
@@ -311,26 +295,38 @@ const pages: SidebarItem[] = [
       {
         href: "/meal-templates",
         label: "Meal Templates",
-        icon: HiOutlineTable,
         segment: "meal-templates",
-      },
-      {
-        href: "/meal-template-library",
-        label: "Template Library",
-        icon: HiOutlineDatabase,
-        segment: "meal-template-library",
       },
       {
         href: "/recipes",
         label: "My Recipes",
-        icon: HiOutlineTable,
         segment: "recipes",
+      },
+    ],
+  },
+  {
+    icon: HiOutlineDatabase,
+    label: "Libraries",
+    items: [
+      {
+        href: "/meal-template-library",
+        label: "Template Library",
+        segment: "meal-template-library",
       },
       {
         href: "/recipe-library",
         label: "Recipe Library",
-        icon: HiOutlineDatabase,
         segment: "recipe-library",
+      },
+      {
+        href: "/workout-template-library",
+        label: "Template Library",
+        segment: "workout-template-library",
+      },
+      {
+        href: "/exercise-library",
+        label: "Exercsie Library",
+        segment: "exercise-library",
       },
     ],
   },
