@@ -310,22 +310,22 @@ const pages: SidebarItem[] = [
     items: [
       {
         href: "/meal-template-library",
-        label: "Template Library",
+        label: "Meal Templates",
         segment: "meal-template-library",
       },
       {
         href: "/recipe-library",
-        label: "Recipe Library",
+        label: "Recipes",
         segment: "recipe-library",
       },
       {
         href: "/workout-template-library",
-        label: "Template Library",
+        label: "Workout Templates",
         segment: "workout-template-library",
       },
       {
         href: "/exercise-library",
-        label: "Exercsie Library",
+        label: "Exercsies",
         segment: "exercise-library",
       },
     ],
