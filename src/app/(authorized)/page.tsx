@@ -1,4 +1,6 @@
 import { createSupabaseServerClient } from "@/lib/utils/supabase/server";
+import { Avatar } from "flowbite-react";
+import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 
 export default async function Page() {
@@ -26,15 +28,35 @@ export default async function Page() {
 
   return (
     <div className="w-screen h-screen bg-gray-50 grid place-items-center dark:bg-gray-800">
-      <ul className="max-w-screen-sm mx-auto w-full flex justify-center items-center gap-6">
-        <li>
-          <p>thumbnail1</p>
-          <p>name</p>
-        </li>
-        <li>
-          <p>thumbnail1</p>
-          <p>name</p>
-        </li>
+      <ul className="max-w-screen-md mx-auto w-full flex justify-center items-center gap-6">
+        {businessUsers.map((businessUser) => (
+          <Link
+            href={`/${businessUser.business_id}`}
+            key={businessUser.business_id}
+          >
+            <li className="grid gap-2 border border-transparent p-4 rounded hover:border-gray-200 hover:bg-gray-100">
+              <Avatar
+                bordered
+                color="cyan"
+                size="lg"
+                rounded
+                placeholderInitials={businessUser.business?.name
+                  .match(/\b(\w)/g)
+                  ?.join("")}
+              >
+                <div className="space-y-1 font-medium dark:text-white">
+                  <div>{businessUser.business?.name}</div>
+                  <div className="text-sm text-gray-500 dark:text-gray-400">
+                    Joined in{" "}
+                    {new Date(
+                      businessUser.business?.created_at ?? ""
+                    ).toLocaleDateString()}
+                  </div>
+                </div>
+              </Avatar>
+            </li>
+          </Link>
+        ))}
       </ul>
     </div>
   );
