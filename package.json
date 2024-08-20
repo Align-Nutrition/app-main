@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "cy:open": "cypress open",
-    "update-types": "npx supabase gen types --lang=typescript --project-id mzexgfklayufowipbfwf --schema public > src/lib/types/supabase.d.ts",
+    "update-types": "npx --yes supabase gen types --lang=typescript --project-id mzexgfklayufowipbfwf --schema public > src/lib/types/supabase.d.ts",
     "cypress:open": "cypress open"
   },
   "dependencies": {
