@@ -19,7 +19,11 @@ import { HiHome, HiSearch } from "react-icons/hi";
 import { AddClientDrawer } from "./add-client-drawer";
 import { InviteClientModal } from "./invite-client-modal";
 
-export default function Page() {
+export default function Page({
+  params: { businessId },
+}: {
+  params: { businessId: string };
+}) {
   return (
     <>
       <div className="block items-center justify-between bg-white p-4 sm:flex dark:bg-gray-800">
@@ -123,7 +127,9 @@ export default function Page() {
                     alt=""
                     className="mr-3 h-8 w-auto"
                   />
-                  <Link href="/clients/1">Apple iMac 27&#34;</Link>
+                  <Link href={`/${businessId}/clients/1`}>
+                    Apple iMac 27&#34;
+                  </Link>
                 </TableCell>
                 <TableCell className="px-4 py-3.5">
                   <Badge className="w-fit">Desktop PC</Badge>
@@ -188,12 +194,14 @@ export default function Page() {
                   scope="row"
                   className="flex items-center whitespace-nowrap px-4 py-3.5 font-medium text-gray-900 dark:text-white"
                 >
-                  <img
-                    src="https://flowbite.s3.amazonaws.com/blocks/application-ui/products/imac-front-image.png"
-                    alt=""
-                    className="mr-3 h-8 w-auto"
-                  />
-                  Apple iMac 20&quot;
+                  <picture>
+                    <img
+                      src="https://flowbite.s3.amazonaws.com/blocks/application-ui/products/imac-front-image.png"
+                      alt=""
+                      className="mr-3 h-8 w-auto"
+                    />
+                    Apple iMac 20&quot;
+                  </picture>
                 </TableCell>
                 <TableCell className="px-4 py-3.5">
                   <Badge className="w-fit">Desktop PC</Badge>
