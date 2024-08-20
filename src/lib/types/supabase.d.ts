@@ -16,10 +16,10 @@ export type Database = {
           created_at: string
           custom_welcome_message: string | null
           email: string
-          first_name: string
+          full_name: string
           id: number
-          last_name: string | null
           trainer_id: string
+          user_id: string | null
         }
         Insert: {
           business_id: string
@@ -27,10 +27,10 @@ export type Database = {
           created_at?: string
           custom_welcome_message?: string | null
           email: string
-          first_name: string
+          full_name: string
           id?: number
-          last_name?: string | null
           trainer_id: string
+          user_id?: string | null
         }
         Update: {
           business_id?: string
@@ -38,10 +38,10 @@ export type Database = {
           created_at?: string
           custom_welcome_message?: string | null
           email?: string
-          first_name?: string
+          full_name?: string
           id?: number
-          last_name?: string | null
           trainer_id?: string
+          user_id?: string | null
         }
         Relationships: [
           {
@@ -54,6 +54,13 @@ export type Database = {
           {
             foreignKeyName: "business_client_invites_trainer_id_fkey1"
             columns: ["trainer_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "business_client_invites_user_id_fkey"
+            columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "profiles"
             referencedColumns: ["id"]
@@ -153,7 +160,9 @@ export type Database = {
           country: string | null
           created_at: string
           email: string | null
+          google_play_store_url: string | null
           id: string
+          ios_app_store_url: string | null
           logo: string | null
           name: string
           phone: string | null
@@ -163,7 +172,9 @@ export type Database = {
           country?: string | null
           created_at?: string
           email?: string | null
+          google_play_store_url?: string | null
           id?: string
+          ios_app_store_url?: string | null
           logo?: string | null
           name: string
           phone?: string | null
@@ -173,7 +184,9 @@ export type Database = {
           country?: string | null
           created_at?: string
           email?: string | null
+          google_play_store_url?: string | null
           id?: string
+          ios_app_store_url?: string | null
           logo?: string | null
           name?: string
           phone?: string | null
@@ -184,24 +197,36 @@ export type Database = {
       profiles: {
         Row: {
           avatar_url: string | null
+          birthday: string | null
+          country: string | null
           full_name: string | null
+          height_inches: number | null
           id: string
+          phone: string | null
           updated_at: string | null
           username: string | null
           website: string | null
         }
         Insert: {
           avatar_url?: string | null
+          birthday?: string | null
+          country?: string | null
           full_name?: string | null
+          height_inches?: number | null
           id: string
+          phone?: string | null
           updated_at?: string | null
           username?: string | null
           website?: string | null
         }
         Update: {
           avatar_url?: string | null
+          birthday?: string | null
+          country?: string | null
           full_name?: string | null
+          height_inches?: number | null
           id?: string
+          phone?: string | null
           updated_at?: string | null
           username?: string | null
           website?: string | null
@@ -222,7 +247,7 @@ export type Database = {
           food_dislikes: string[] | null
           food_likes: string[] | null
           measurements: string[] | null
-          system_of_measurement: string | null
+          unit_of_measurement: string | null
           user_id: string
         }
         Insert: {
@@ -230,7 +255,7 @@ export type Database = {
           food_dislikes?: string[] | null
           food_likes?: string[] | null
           measurements?: string[] | null
-          system_of_measurement?: string | null
+          unit_of_measurement?: string | null
           user_id: string
         }
         Update: {
@@ -238,7 +263,7 @@ export type Database = {
           food_dislikes?: string[] | null
           food_likes?: string[] | null
           measurements?: string[] | null
-          system_of_measurement?: string | null
+          unit_of_measurement?: string | null
           user_id?: string
         }
         Relationships: [
@@ -256,7 +281,15 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_user_id_from_auth_users: {
+        Args: {
+          lookup_email: string
+        }
+        Returns: {
+          id: string
+          email: string
+        }[]
+      }
     }
     Enums: {
       "Business User Roles":

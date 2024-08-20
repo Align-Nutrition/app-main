@@ -127,4 +127,7 @@ export const customTheme: CustomFlowbiteTheme = createTheme({
       shadow: "",
     },
   },
+  tooltip: {
+    base: twMerge(theme.tooltip.base, "max-w-md"),
+  },
 });

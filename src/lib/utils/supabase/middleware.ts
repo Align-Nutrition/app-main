@@ -24,10 +24,18 @@ export async function updateSession(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
+  const {
+    nextUrl: { pathname },
+  } = request;
+
+  const isAuthorizedClientOnboardingRoute =
+    pathname.includes("/client-onboarding") && pathname.split("/").length > 3;
+
   if (
     !user &&
-    !request.nextUrl.pathname.startsWith("/sign-") &&
-    !request.nextUrl.pathname.startsWith("/auth")
+    !pathname.startsWith("/sign-") &&
+    !pathname.startsWith("/auth") &&
+    !isAuthorizedClientOnboardingRoute
   ) {
     // no user, potentially respond by redirecting the user to the login page
     const url = request.nextUrl.clone();

@@ -1,3 +1,4 @@
+import acronymize from "@/lib/utils/acronymize";
 import { createSupabaseServerClient } from "@/lib/utils/supabase/server";
 import { Avatar } from "flowbite-react";
 import Link from "next/link";
@@ -40,9 +41,7 @@ export default async function Page() {
                 color="cyan"
                 size="lg"
                 rounded
-                placeholderInitials={businessUser.business?.name
-                  .match(/\b(\w)/g)
-                  ?.join("")}
+                placeholderInitials={acronymize(businessUser.business?.name)}
               >
                 <div className="space-y-1 font-medium dark:text-white">
                   <div>{businessUser.business?.name}</div>

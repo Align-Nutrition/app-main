@@ -5,15 +5,7 @@ import { Badge, Sidebar, TextInput, theme } from "flowbite-react";
 import Link from "next/link";
 import { useParams, useSelectedLayoutSegments } from "next/navigation";
 import type { ComponentProps, FC, HTMLAttributeAnchorTarget } from "react";
-import {
-  HiOutlineDatabase,
-  HiOutlineFilter,
-  HiOutlineMailOpen,
-  HiOutlineTable,
-  HiOutlineUserGroup,
-  HiOutlineUsers,
-  HiSearch,
-} from "react-icons/hi";
+import { HiOutlineDatabase, HiOutlineUsers, HiSearch } from "react-icons/hi";
 import { HiOutlineDocument } from "react-icons/hi2";
 import { MdOutlineDashboard, MdOutlineFastfood } from "react-icons/md";
 import { PiBarbell } from "react-icons/pi";
@@ -193,7 +185,7 @@ function SidebarItem({
               collapsed: {
                 insideCollapse: twMerge(
                   theme.sidebar.item.collapsed.insideCollapse,
-                  "pl-4"
+                  "pl-0"
                 ),
               },
             }}
@@ -242,27 +234,23 @@ const pages: SidebarItem[] = [
     items: [
       {
         href: "/clients",
-        label: "List",
-        icon: HiOutlineTable,
+        label: "View All",
         segment: "clients",
       },
       {
         href: "/client-forms",
         label: "Forms",
-        icon: HiOutlineFilter,
         segment: "client-forms",
       },
       {
         href: "/client-groups",
         label: "Groups",
-        icon: HiOutlineUserGroup,
         segment: "client-groups",
       },
       {
         href: "/client-inbox",
         label: "Inbox",
         badge: "3",
-        icon: HiOutlineMailOpen,
         segment: "client-inbox",
       },
     ],
