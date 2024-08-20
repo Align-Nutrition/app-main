@@ -409,6 +409,7 @@ function NotificationBellDropdown() {
 }
 
 function UserDropdown() {
+  const { profile } = useUserContext();
   const router = useRouter();
   return (
     <Dropdown
@@ -418,15 +419,12 @@ function UserDropdown() {
       label={
         <span>
           <span className="sr-only">User menu</span>
-          <Avatar alt="" img="/images/users/neil-sims.png" rounded size="sm" />
+          <Avatar alt="" img={profile?.avatar_url ?? ""} rounded size="sm" />
         </span>
       }
     >
       <Dropdown.Header className="px-4 py-3">
-        <span className="block text-sm">Neil Sims</span>
-        <span className="block truncate text-sm font-medium">
-          neil.sims@flowbite.com
-        </span>
+        <span className="block text-sm">{profile?.full_name}</span>
       </Dropdown.Header>
       <Dropdown.Item>Dashboard</Dropdown.Item>
       <Dropdown.Item>Settings</Dropdown.Item>
