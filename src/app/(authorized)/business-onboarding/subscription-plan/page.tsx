@@ -199,7 +199,6 @@ export default function Page() {
     })
       .then((res) => res.json())
       .then((res) => {
-        console.log({ res });
         if (res.error) throw res.error;
         return res.clientSecret;
       })
