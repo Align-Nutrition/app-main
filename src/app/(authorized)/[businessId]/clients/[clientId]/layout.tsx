@@ -1,6 +1,6 @@
-import { PropsWithChildren, ReactNode } from "react";
-import LayoutHeader from "./layout-header";
 import { notFound } from "next/navigation";
+import { PropsWithChildren } from "react";
+import LayoutHeader from "./layout-header";
 
 type LayoutProps = PropsWithChildren<{
   params: { clientId: string };

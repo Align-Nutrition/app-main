@@ -1,11 +1,8 @@
 "use client";
-import useStuck from "@/lib/hooks/use-stuck";
-import { Banner, Card, Dropdown, Progress } from "flowbite-react";
-import { useRef } from "react";
+import { Banner, Card, Dropdown } from "flowbite-react";
 import { HiDotsHorizontal, HiTrash } from "react-icons/hi";
 import { MdOutlineDragIndicator } from "react-icons/md";
 import { ReactSortable } from "react-sortablejs";
-import { twMerge } from "tailwind-merge";
 
 const workouts = [
   {

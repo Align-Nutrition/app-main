@@ -11,13 +11,16 @@ import {
   theme,
 } from "flowbite-react";
 import Link from "next/link";
-import { useState } from "react";
 import { BiDotsHorizontal } from "react-icons/bi";
 import { FaEdit } from "react-icons/fa";
 import { HiOutlineTrash } from "react-icons/hi";
 import { twMerge } from "tailwind-merge";
 
-export default function Page() {
+export default function Page({
+  params: { businessId, clientId },
+}: {
+  params: { businessId: string; clientId: string };
+}) {
   return (
     <div className="bg-white dark:bg-gray-800">
       <Table
@@ -49,7 +52,9 @@ export default function Page() {
               scope="row"
               className="whitespace-nowrap p-5 font-medium text-gray-900 dark:text-white"
             >
-              <Link href={`/clients/1/assessments/1`}>January 1st, 2024</Link>
+              <Link href={`/${businessId}/clients/${clientId}/assessments/1`}>
+                January 1st, 2024
+              </Link>
             </TableCell>
             <TableCell className="p-5">20</TableCell>
             <TableCell className="p-5">30</TableCell>
@@ -87,7 +92,9 @@ export default function Page() {
               scope="row"
               className="whitespace-nowrap p-5 font-medium text-gray-900 dark:text-white"
             >
-              <Link href={`/clients/1/assessments/1`}>January 1st, 2024</Link>
+              <Link href={`/${businessId}/clients/${clientId}/assessments/1`}>
+                January 1st, 2024
+              </Link>
             </TableCell>
             <TableCell className="p-5">20</TableCell>
             <TableCell className="p-5">30</TableCell>

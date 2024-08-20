@@ -1,9 +1,8 @@
 "use client";
 
-import { Dropdown, Select, Tabs, theme } from "flowbite-react";
+import { Dropdown, Tabs, theme } from "flowbite-react";
 import {
   useParams,
-  usePathname,
   useRouter,
   useSelectedLayoutSegment,
 } from "next/navigation";
@@ -17,9 +16,8 @@ import { twMerge } from "tailwind-merge";
 
 export default function LayoutSidebar() {
   const segment = useSelectedLayoutSegment();
-  const pathname = usePathname();
   const router = useRouter();
-  const { clientId } = useParams();
+  const { businessId, clientId } = useParams();
   const tabs = [
     { title: "Summary", icon: HiOutlineChartPie, segment: null },
     { title: "Measurements", icon: TbRulerMeasure, segment: "measurements" },
@@ -31,7 +29,7 @@ export default function LayoutSidebar() {
 
   function navigateToSegment(tabIndex: number) {
     const segmentPath = tabs[tabIndex].segment;
-    const path = `/clients/${clientId}/assessments/id/${
+    const path = `/${businessId}/clients/${clientId}/assessments/id/${
       segmentPath ? `/${segmentPath}` : ""
     }`;
     router.push(path);

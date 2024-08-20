@@ -342,7 +342,7 @@ export default function Page() {
                         <div className="drag-item -mx-3 cursor-move">
                           <MdOutlineDragIndicator className="w-5 h-5 text-gray-500 dark:text-gray-400" />
                         </div>
-                        <div className="shrink-0">
+                        <picture className="shrink-0">
                           <img
                             alt="Neil image"
                             height="32"
@@ -350,7 +350,7 @@ export default function Page() {
                             width="32"
                             className="rounded-full"
                           />
-                        </div>
+                        </picture>
                         <div className="min-w-0 flex-1">
                           <p className="truncate text-sm font-medium text-gray-900 dark:text-white">
                             {mealItem.name}

@@ -8,18 +8,15 @@ import {
   theme,
 } from "flowbite-react";
 import {
-  usePathname,
+  useParams,
   useRouter,
   useSelectedLayoutSegment,
 } from "next/navigation";
-import { ReactNode } from "react";
 import { AiOutlineSchedule } from "react-icons/ai";
 import { BsPersonGear } from "react-icons/bs";
 import { CiCircleList } from "react-icons/ci";
 import { HiHome, HiOutlineChartBar, HiOutlineChartPie } from "react-icons/hi";
-import { HiOutlineBanknotes } from "react-icons/hi2";
 import { MdOutlineDashboard, MdOutlineDynamicForm } from "react-icons/md";
-import { RxActivityLog } from "react-icons/rx";
 import { twMerge } from "tailwind-merge";
 
 type LayoutProps = {
@@ -29,7 +26,8 @@ type LayoutProps = {
 export default function LayoutHeader({ clientId }: LayoutProps) {
   const segment = useSelectedLayoutSegment();
   const router = useRouter();
-  const pathname = usePathname();
+  const { businessId } = useParams();
+
   const clientTabs = [
     {
       title: "Dashboard",
@@ -74,7 +72,9 @@ export default function LayoutHeader({ clientId }: LayoutProps) {
 
   function navigateToSegment(tabIndex: number) {
     const segmentPath = clientTabs[tabIndex].segment;
-    const path = `/clients/${clientId}/${segmentPath ? `/${segmentPath}` : ""}`;
+    const path = `/${businessId}/clients/${clientId}/${
+      segmentPath ? `/${segmentPath}` : ""
+    }`;
     router.push(path);
   }
 
