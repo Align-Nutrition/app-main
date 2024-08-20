@@ -83,7 +83,7 @@ export function FormField(props: FormFieldProps & FieldProps) {
 
   const Component = components[props.field];
 
-  return null;
+  return Component;
 }
 
 export default function Form({ children, onSubmit }: FormProps) {

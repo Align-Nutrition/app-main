@@ -6,6 +6,7 @@ import { createContext, useContext, useState } from "react";
 interface SidebarContextProps {
   desktop: {
     isCollapsed: boolean;
+    // eslint-disable-next-line no-unused-vars
     setCollapsed(value: boolean): void;
     toggle(): void;
   };

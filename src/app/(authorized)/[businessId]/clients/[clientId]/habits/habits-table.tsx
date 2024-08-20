@@ -7,8 +7,7 @@ import { FaXmark } from "react-icons/fa6";
 import { HiCheckCircle } from "react-icons/hi";
 
 export default function HabitsTable() {
-  const { calculatedOpacity, onScroll, ScrollIndicator, scrollLeft } =
-    useScrollIndicator();
+  const { calculatedOpacity, onScroll, ScrollIndicator } = useScrollIndicator();
 
   return (
     <Card className="overflow-x-auto">

@@ -166,12 +166,14 @@ export default function Page() {
                           <MdOutlineDragIndicator className="w-5 h-5 text-gray-500 dark:text-gray-400" />
                         </div>
                         <div className="shrink-0">
-                          <img
-                            alt="exercise"
-                            height="64"
-                            src={exercise.image}
-                            width="64"
-                          />
+                          <picture>
+                            <img
+                              alt="exercise"
+                              height="64"
+                              src={exercise.image}
+                              width="64"
+                            />
+                          </picture>
                         </div>
                         <div className="min-w-0 flex-1">
                           <p className="truncate text-sm font-medium text-gray-900 dark:text-white">

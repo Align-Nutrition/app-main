@@ -4,7 +4,6 @@ import Chart from "@/components/chart";
 import { Progress, useThemeMode } from "flowbite-react";
 
 export default function NutritionPieChart() {
-  const dashboard = {};
   const { mode } = useThemeMode();
   const isDarkTheme = mode === "dark";
 

@@ -1,11 +1,12 @@
 "use client";
 import { Button, Modal } from "flowbite-react";
 import { useRouter } from "next/navigation";
-import { FormEvent, PropsWithChildren, useState } from "react";
+import { PropsWithChildren, useState } from "react";
 import { createPortal } from "react-dom";
 
 type FormModalProps = PropsWithChildren & {
   header?: string;
+  // eslint-disable-next-line no-unused-vars
   onSubmit: (arg: { [k: string]: FormDataEntryValue }) => Promise<void>;
   primaryButtonText?: string;
   onSecondaryButtonClick?: () => void;

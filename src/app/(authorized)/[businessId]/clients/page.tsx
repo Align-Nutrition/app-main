@@ -122,11 +122,13 @@ export default function Page({
                   scope="row"
                   className="flex items-center whitespace-nowrap px-4 py-3.5 font-medium text-gray-900 dark:text-white"
                 >
-                  <img
-                    src="https://flowbite.s3.amazonaws.com/blocks/application-ui/products/imac-front-image.png"
-                    alt=""
-                    className="mr-3 h-8 w-auto"
-                  />
+                  <picture>
+                    <img
+                      src="https://flowbite.s3.amazonaws.com/blocks/application-ui/products/imac-front-image.png"
+                      alt=""
+                      className="mr-3 h-8 w-auto"
+                    />
+                  </picture>
                   <Link href={`/${businessId}/clients/1`}>
                     Apple iMac 27&#34;
                   </Link>

@@ -14,8 +14,7 @@ import {
 import Link from "next/link";
 import { BiDotsHorizontal } from "react-icons/bi";
 import { FaEdit } from "react-icons/fa";
-import { FaXmark } from "react-icons/fa6";
-import { HiCheckCircle, HiOutlineTrash } from "react-icons/hi";
+import { HiOutlineTrash } from "react-icons/hi";
 import { twMerge } from "tailwind-merge";
 import HabitsTable from "./habits-table";
 

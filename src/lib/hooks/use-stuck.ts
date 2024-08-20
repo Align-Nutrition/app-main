@@ -4,11 +4,6 @@ type StuckProps = {
   elementRef?: MutableRefObject<null | Element>;
 };
 
-type ListenerProps = {
-  this: HTMLElement;
-  ev: Event;
-};
-
 export default function useStuck({ elementRef }: StuckProps) {
   const [isStuck, setIsStuck] = useState(false);
 

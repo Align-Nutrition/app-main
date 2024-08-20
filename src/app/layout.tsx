@@ -1,6 +1,6 @@
 import { Flowbite, ThemeModeScript } from "flowbite-react";
 import type { Metadata } from "next";
-import { Inter, Open_Sans } from "next/font/google";
+import { Open_Sans } from "next/font/google";
 import { twMerge } from "tailwind-merge";
 import "./globals.css";
 import { customTheme } from "./theme";

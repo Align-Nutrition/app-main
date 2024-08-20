@@ -1,27 +1,19 @@
-import Chart from "@/components/chart";
-import { Dashboard } from "@/lib/types/dashboard";
 import {
   Card,
-  Dropdown,
-  DropdownItem,
   Table,
   TableBody,
   TableCell,
   TableHead,
   TableHeadCell,
-  TableRow,
-  theme,
-  useThemeMode,
+  TableRow
 } from "flowbite-react";
-import { FC } from "react";
+import {BiTrophy} from "react-icons/bi";
+import {FaAward} from "react-icons/fa";
+import {FaXmark} from "react-icons/fa6";
+import {HiCheckCircle} from "react-icons/hi";
+import {PiBarbell} from "react-icons/pi";
+import {TbRulerMeasure, TbTreadmill} from "react-icons/tb";
 import NutritionPieChart from "./nutrition-pie-chart";
-import Image from "next/image";
-import { TbRulerMeasure, TbTreadmill } from "react-icons/tb";
-import { FaAward } from "react-icons/fa";
-import { PiBarbell } from "react-icons/pi";
-import { BiTrophy } from "react-icons/bi";
-import { HiCheckCircle, HiOutlineCheckCircle } from "react-icons/hi";
-import { FaXmark } from "react-icons/fa6";
 
 export default function Page() {
   return (
