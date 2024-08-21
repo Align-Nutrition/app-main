@@ -1,5 +1,6 @@
 "use client";
 
+import { Tables } from "@/lib/types/supabase";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -20,10 +21,10 @@ import { MdOutlineDashboard, MdOutlineDynamicForm } from "react-icons/md";
 import { twMerge } from "tailwind-merge";
 
 type LayoutProps = {
-  clientId: string;
+  client: Tables<"profiles">;
 };
 
-export default function LayoutHeader({ clientId }: LayoutProps) {
+export default function LayoutHeader({ client }: LayoutProps) {
   const segment = useSelectedLayoutSegment();
   const router = useRouter();
   const { businessId } = useParams();
@@ -72,7 +73,7 @@ export default function LayoutHeader({ clientId }: LayoutProps) {
 
   function navigateToSegment(tabIndex: number) {
     const segmentPath = clientTabs[tabIndex].segment;
-    const path = `/${businessId}/clients/${clientId}/${
+    const path = `/${businessId}/clients/${client.id}/${
       segmentPath ? `/${segmentPath}` : ""
     }`;
     router.push(path);
@@ -82,13 +83,15 @@ export default function LayoutHeader({ clientId }: LayoutProps) {
     <>
       <div className=" bg-white p-4 dark:bg-gray-800 relative">
         <Breadcrumb className="mb-5">
-          <BreadcrumbItem href="#">
+          <BreadcrumbItem href="/">
             <div className="flex items-center gap-x-3">
               <HiHome className="text-xl" />
             </div>
           </BreadcrumbItem>
-          <BreadcrumbItem href="/clients">Clients</BreadcrumbItem>
-          <BreadcrumbItem>Niel Sims</BreadcrumbItem>
+          <BreadcrumbItem href={`/${businessId}/clients`}>
+            Clients
+          </BreadcrumbItem>
+          <BreadcrumbItem>{client.full_name}</BreadcrumbItem>
         </Breadcrumb>
       </div>
       <div className="flex items-center justify-between border-b border-gray-200 bg-white px-4 pb-4 dark:border-gray-700 dark:bg-gray-800">

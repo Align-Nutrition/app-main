@@ -3,7 +3,14 @@ import LayoutSidebar from "./layout-sidebar";
 import { Breadcrumb, BreadcrumbItem } from "flowbite-react";
 import { BiChevronLeft } from "react-icons/bi";
 
-export default function Layout({ children }: PropsWithChildren) {
+type AssessmentLayoutPropTypes = PropsWithChildren & {
+  params: { businessId: string; clientId: string };
+};
+
+export default function Layout({
+  children,
+  params: { businessId, clientId },
+}: AssessmentLayoutPropTypes) {
   return (
     <div className="2xl:max-w-screen-lg 2xl:mx-auto p-4">
       <div className="grid lg:grid-cols-12 gap-6 relative">
@@ -12,7 +19,7 @@ export default function Layout({ children }: PropsWithChildren) {
             <Breadcrumb>
               <BreadcrumbItem
                 icon={BiChevronLeft}
-                href={`/clients/1/assessments`}
+                href={`/${businessId}/clients/${clientId}/assessments`}
               >
                 Back to Assessments
               </BreadcrumbItem>

@@ -17,7 +17,7 @@ import { twMerge } from "tailwind-merge";
 export default function LayoutSidebar() {
   const segment = useSelectedLayoutSegment();
   const router = useRouter();
-  const { businessId, clientId } = useParams();
+  const { businessId, clientId, assessmentId } = useParams();
   const tabs = [
     { title: "Summary", icon: HiOutlineChartPie, segment: null },
     { title: "Measurements", icon: TbRulerMeasure, segment: "measurements" },
@@ -29,7 +29,7 @@ export default function LayoutSidebar() {
 
   function navigateToSegment(tabIndex: number) {
     const segmentPath = tabs[tabIndex].segment;
-    const path = `/${businessId}/clients/${clientId}/assessments/id/${
+    const path = `/${businessId}/clients/${clientId}/assessments/${assessmentId}/${
       segmentPath ? `/${segmentPath}` : ""
     }`;
     router.push(path);
