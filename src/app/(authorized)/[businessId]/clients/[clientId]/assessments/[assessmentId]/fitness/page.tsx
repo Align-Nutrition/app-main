@@ -90,8 +90,9 @@ export default function Page() {
       <div className="self-end">
         <Dropdown size="sm" label="Add to Fitness">
           <Dropdown.Item>New Workout</Dropdown.Item>
+          <Dropdown.Item>Start Workout Program</Dropdown.Item>
           <Dropdown.Item>Import Workout Template</Dropdown.Item>
-          <Dropdown.Item>Copy previous workout</Dropdown.Item>
+          <Dropdown.Item>Copy Previous Workout</Dropdown.Item>
         </Dropdown>
       </div>
       <ReactSortable
