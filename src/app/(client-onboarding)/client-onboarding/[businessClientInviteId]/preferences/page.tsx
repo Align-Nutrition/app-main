@@ -7,6 +7,7 @@ import { handleUpdateClientPreferences } from "./actions";
 import { MdError } from "react-icons/md";
 import { MEASUREMENTS } from "@/lib/consts/measurement-preferences";
 import { useParams } from "next/navigation";
+import { FITNESS_GOALS } from "@/lib/consts/fitness-goal-preferences";
 
 const initialFormState = {
   success: false,
@@ -50,6 +51,29 @@ export default function Page() {
           </Alert>
         </div>
       )}
+      <fieldset>
+        <legend className="mb-4 text-lg text-gray-500 dark:text-gray-400">
+          Select your fitness goal
+        </legend>
+        <ul className="grid sm:grid-cols-2 mb-6 gap-4 sm:gap-6">
+          {FITNESS_GOALS.map((fitnessGoal) => (
+            <li key={fitnessGoal}>
+              <Radio
+                id={fitnessGoal.toLowerCase().replaceAll(" ", "")}
+                name="fitness_goal"
+                value={fitnessGoal}
+                className="peer hidden"
+              />
+              <Label
+                htmlFor={fitnessGoal.toLowerCase().replaceAll(" ", "")}
+                className="inline-flex w-full cursor-pointer items-center justify-center rounded-lg border-2 border-gray-200 bg-gray-50 p-5 text-base text-gray-500 hover:bg-gray-100 hover:text-gray-600 peer-checked:border-cyan-600 peer-checked:text-cyan-600 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 dark:peer-checked:text-cyan-500 peer-checked:bg-cyan-100"
+              >
+                <span className="w-full">{fitnessGoal}</span>
+              </Label>
+            </li>
+          ))}
+        </ul>
+      </fieldset>
       <fieldset>
         <legend className="mb-4 text-lg text-gray-500 dark:text-gray-400">
           Select which unit of measurement you prefer

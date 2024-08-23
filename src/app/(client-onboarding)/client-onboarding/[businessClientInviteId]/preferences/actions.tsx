@@ -1,5 +1,6 @@
 "use server";
 
+import { Enums } from "@/lib/types/supabase";
 import generateActionResponse, {
   ActionResponseType,
 } from "@/lib/utils/generate-action-response";
@@ -25,10 +26,17 @@ export async function handleUpdateClientPreferences(
   const { error: updateUserPreferencesError } = await supabase
     .from("user_preferences")
     .update({
-      food_likes: formData.getAll("food_likes") as string[],
-      food_dislikes: formData.getAll("food_dislikes") as string[],
-      food_allergies: formData.getAll("food_allergies") as string[],
-      measurements: formData.getAll("measurements") as string[],
+      fitness_goal: formData.get("fitness_goal") as Enums<"User Fitness Goal">,
+      food_likes: formData.getAll("food_likes") as Enums<"Common Foods">[],
+      food_dislikes: formData.getAll(
+        "food_dislikes"
+      ) as Enums<"Common Foods">[],
+      food_allergies: formData.getAll(
+        "food_allergies"
+      ) as Enums<"Food Allergies">[],
+      measurements: formData.getAll(
+        "measurements"
+      ) as Enums<"Body Measurements">[],
     })
     .eq("user_id", user.id);
 
